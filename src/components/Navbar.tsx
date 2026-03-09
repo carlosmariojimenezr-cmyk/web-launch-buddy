@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import NexovLogo from "@/components/NexovLogo";
 
 const navLinks = [
   { label: "Servicios", href: "#servicios" },
