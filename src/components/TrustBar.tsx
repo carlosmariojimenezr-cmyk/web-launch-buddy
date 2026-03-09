@@ -1,12 +1,15 @@
 import { Shield, Clock, Users } from "lucide-react";
-
-const items = [
-  { icon: Shield, text: "Consulta inicial gratuita" },
-  { icon: Clock, text: "Resultados en la primera semana" },
-  { icon: Users, text: "+20 PYMEs confían en nosotros" },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function TrustBar() {
+  const { t } = useLanguage();
+
+  const items = [
+    { icon: Shield, text: t("trust.item1") },
+    { icon: Clock, text: t("trust.item2") },
+    { icon: Users, text: t("trust.item3") },
+  ];
+
   return (
     <section className="py-6 border-y border-border bg-secondary/20">
       <div className="container">
@@ -14,9 +17,7 @@ export default function TrustBar() {
           {items.map((item, i) => (
             <div key={i} className="flex items-center gap-2.5">
               <item.icon className="w-4 h-4 text-primary shrink-0" />
-              <span className="text-sm text-muted-foreground font-medium">
-                {item.text}
-              </span>
+              <span className="text-sm text-muted-foreground font-medium">{item.text}</span>
             </div>
           ))}
         </div>

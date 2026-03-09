@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { BookingProvider } from "@/contexts/BookingContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import BookingModal from "@/components/BookingModal";
 import Index from "./pages/Index";
 import Blog from "./pages/Blog";
@@ -21,32 +22,47 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+const AppRoutes = () => (
+  <LanguageProvider>
+    <BookingProvider>
+      <Toaster />
+      <Sonner />
+      <Routes>
+        {/* Spanish routes (default) */}
+        <Route path="/" element={<Index />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogArticle />} />
+        <Route path="/calculadora" element={<Calculadora />} />
+
+        {/* English routes */}
+        <Route path="/en" element={<Index />} />
+        <Route path="/en/blog" element={<Blog />} />
+        <Route path="/en/blog/:slug" element={<BlogArticle />} />
+        <Route path="/en/calculator" element={<Calculadora />} />
+
+        {/* Dashboard (no i18n) */}
+        <Route path="/dashboard" element={<DashboardLogin />} />
+        <Route element={<DashboardLayout />}>
+          <Route path="/dashboard/home" element={<DashboardHome />} />
+          <Route path="/dashboard/proyecto" element={<DashboardProyecto />} />
+          <Route path="/dashboard/documentos" element={<DashboardDocumentos />} />
+          <Route path="/dashboard/mensajes" element={<DashboardMensajes />} />
+          <Route path="/dashboard/soporte" element={<DashboardSoporte />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <BookingModal />
+    </BookingProvider>
+  </LanguageProvider>
+);
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <BookingProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogArticle />} />
-              <Route path="/calculadora" element={<Calculadora />} />
-              <Route path="/dashboard" element={<DashboardLogin />} />
-              <Route element={<DashboardLayout />}>
-                <Route path="/dashboard/home" element={<DashboardHome />} />
-                <Route path="/dashboard/proyecto" element={<DashboardProyecto />} />
-                <Route path="/dashboard/documentos" element={<DashboardDocumentos />} />
-                <Route path="/dashboard/mensajes" element={<DashboardMensajes />} />
-                <Route path="/dashboard/soporte" element={<DashboardSoporte />} />
-              </Route>
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-          <BookingModal />
-        </BookingProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
   </HelmetProvider>
