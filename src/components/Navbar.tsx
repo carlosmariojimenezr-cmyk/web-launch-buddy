@@ -60,7 +60,7 @@ export default function Navbar() {
         {/* CTA */}
         <div className="hidden md:block">
           <Button asChild size="sm" className="font-semibold">
-            <a href="#contacto">Agendar llamada</a>
+            <a href="/#contacto">Agendar llamada</a>
           </Button>
         </div>
 
