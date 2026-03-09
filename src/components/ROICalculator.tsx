@@ -54,11 +54,19 @@ export default function ROICalculator() {
   );
 
   return (
-    <section id="calculadora" className="py-16 md:py-20 relative overflow-hidden" ref={ref}>
+    <motion.section
+      id="calculadora"
+      className="py-16 md:py-20 relative overflow-hidden"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
+    >
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/3 blur-[150px]" />
 
       <div className="container max-w-5xl relative">
-        <div className={`text-center mb-12 ${isVisible ? "animate-fade-up" : "opacity-0"}`}>
+        <MotionDiv className="text-center mb-12">
           <span className="font-mono text-xs text-primary uppercase tracking-widest">{t("calculator.tag")}</span>
           <h2 className="font-display text-4xl md:text-5xl font-bold uppercase mt-3 tracking-tight">{t("calculator.headline")}</h2>
           <p className="text-muted-foreground mt-4 max-w-lg mx-auto">{t("calculator.subtitle")}</p>
