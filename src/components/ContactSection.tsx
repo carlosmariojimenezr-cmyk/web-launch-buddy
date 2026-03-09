@@ -3,16 +3,35 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { ArrowRight, MessageCircle, Phone, Mail, MapPin } from "lucide-react";
+import { ArrowRight, MessageCircle, Phone, Mail, MapPin, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function ContactSection() {
   const { ref, isVisible } = useScrollAnimation();
   const { toast } = useToast();
   const [form, setForm] = useState({ nombre: "", email: "", empresa: "", telefono: "", mensaje: "" });
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    
+    const { error } = await supabase.from("leads").insert({
+      nombre: form.nombre.trim(),
+      email: form.email.trim(),
+      empresa: form.empresa.trim() || null,
+      telefono: form.telefono.trim() || null,
+      mensaje: form.mensaje.trim(),
+    });
+
+    setLoading(false);
+
+    if (error) {
+      toast({ title: "Error al enviar", description: "Intenta de nuevo más tarde.", variant: "destructive" });
+      return;
+    }
+
     toast({ title: "¡Mensaje enviado!", description: "Te contactaremos pronto." });
     setForm({ nombre: "", email: "", empresa: "", telefono: "", mensaje: "" });
   };
