@@ -1,9 +1,10 @@
 import { useState, useMemo } from "react";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { ArrowRight, MessageCircle, Clock, Bot, Wifi } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useBooking } from "@/contexts/BookingContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { MotionDiv } from "@/components/MotionComponents";
+import { motion } from "framer-motion";
 
 const AUTOMATION_RATE = 0.6;
 const WEEKS_PER_MONTH = 4;
@@ -23,7 +24,6 @@ function getEmployeeCount(option: string): number {
 }
 
 export default function ROICalculator() {
-  const { ref, isVisible } = useScrollAnimation();
   const booking = useBooking();
   const { t } = useLanguage();
   const [messages, setMessages] = useState(500);
@@ -53,17 +53,25 @@ export default function ROICalculator() {
   );
 
   return (
-    <section id="calculadora" className="py-16 md:py-20 relative overflow-hidden" ref={ref}>
+    <motion.section
+      id="calculadora"
+      className="py-16 md:py-20 relative overflow-hidden"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
+    >
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/3 blur-[150px]" />
 
       <div className="container max-w-5xl relative">
-        <div className={`text-center mb-12 ${isVisible ? "animate-fade-up" : "opacity-0"}`}>
+        <MotionDiv className="text-center mb-12">
           <span className="font-mono text-xs text-primary uppercase tracking-widest">{t("calculator.tag")}</span>
           <h2 className="font-display text-4xl md:text-5xl font-bold uppercase mt-3 tracking-tight">{t("calculator.headline")}</h2>
           <p className="text-muted-foreground mt-4 max-w-lg mx-auto">{t("calculator.subtitle")}</p>
-        </div>
+        </MotionDiv>
 
-        <div className={`rounded-2xl border border-border bg-card p-8 md:p-12 lg:p-14 ${isVisible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: "150ms" }}>
+        <MotionDiv className="rounded-2xl border border-border bg-card p-8 md:p-12 lg:p-14" delay={0.15}>
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-14">
             {/* Inputs */}
             <div className="space-y-8">
@@ -154,8 +162,8 @@ export default function ROICalculator() {
               </div>
             </div>
           </div>
-        </div>
+        </MotionDiv>
       </div>
-    </section>
+    </motion.section>
   );
 }
