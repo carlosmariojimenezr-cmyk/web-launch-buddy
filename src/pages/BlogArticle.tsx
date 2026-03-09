@@ -145,11 +145,9 @@ export default function BlogArticle() {
               Agenda una consulta gratuita y descubre cómo podemos ayudarte.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-5">
-              <Button asChild size="lg" className="font-semibold gap-2">
-                <a href="/#contacto">
+              <Button size="lg" className="font-semibold gap-2" onClick={useBooking().open}>
                   Agendar llamada gratis
                   <ArrowRight size={16} />
-                </a>
               </Button>
               <Button
                 variant="outline"
