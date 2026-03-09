@@ -25,7 +25,6 @@ function getEmployeeCount(option: string): number {
 }
 
 export default function ROICalculator() {
-  const { ref, isVisible } = useScrollAnimation();
   const booking = useBooking();
   const { t } = useLanguage();
   const [messages, setMessages] = useState(500);
