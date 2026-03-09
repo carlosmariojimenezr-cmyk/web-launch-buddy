@@ -27,8 +27,11 @@ export default function ProcessSection() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section id="proceso" className="py-24 md:py-32 bg-secondary/20">
-      <div className="container" ref={ref}>
+    <section id="proceso" className="py-24 md:py-32 bg-secondary/20 relative overflow-hidden">
+      {/* Subtle background accent */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full bg-primary/3 blur-[150px]" />
+
+      <div className="container relative" ref={ref}>
         <div className="text-center mb-16">
           <span className="font-mono text-xs text-primary uppercase tracking-widest">
             Proceso
@@ -38,18 +41,21 @@ export default function ProcessSection() {
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 md:gap-12 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 md:gap-12 max-w-5xl mx-auto relative">
+          {/* Connecting line (desktop) */}
+          <div className="hidden md:block absolute top-[72px] left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
           {steps.map((step, i) => (
             <div
               key={step.num}
               className={`relative text-center ${isVisible ? "animate-fade-up" : "opacity-0"}`}
               style={{ animationDelay: `${i * 150}ms` }}
             >
-              <span className="font-display text-7xl md:text-8xl font-extrabold text-primary/10 absolute -top-6 left-1/2 -translate-x-1/2 select-none">
+              <span className="font-display text-7xl md:text-8xl font-extrabold text-primary/8 absolute -top-6 left-1/2 -translate-x-1/2 select-none pointer-events-none">
                 {step.num}
               </span>
               <div className="relative z-10 pt-8">
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
+                <div className="w-14 h-14 rounded-xl bg-card border border-border flex items-center justify-center mx-auto mb-5">
                   <step.icon className="w-7 h-7 text-primary" />
                 </div>
                 <h3 className="font-display text-2xl font-bold uppercase tracking-tight mb-3">
@@ -64,7 +70,7 @@ export default function ProcessSection() {
         </div>
 
         <div className="text-center mt-14">
-          <Button asChild size="lg" className="font-semibold px-8">
+          <Button asChild size="lg" className="font-semibold px-8 shadow-lg shadow-primary/20">
             <a href="#contacto">Empezar con el paso 1</a>
           </Button>
         </div>
