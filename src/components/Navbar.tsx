@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import NexovLogo from "@/components/NexovLogo";
+import { Link, useLocation } from "react-router-dom";
 
 const navLinks = [
-  { label: "Servicios", href: "#servicios" },
-  { label: "Proceso", href: "#proceso" },
-  { label: "Nosotros", href: "#nosotros" },
-  { label: "Casos", href: "#casos" },
+  { label: "Servicios", href: "/#servicios" },
+  { label: "Proceso", href: "/#proceso" },
+  { label: "Nosotros", href: "/#nosotros" },
+  { label: "Casos", href: "/#casos" },
+  { label: "Blog", href: "/blog" },
 ];
 
 export default function Navbar() {
