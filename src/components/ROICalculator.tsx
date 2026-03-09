@@ -163,8 +163,8 @@ export default function ROICalculator() {
               </div>
             </div>
           </div>
-        </div>
+        </MotionDiv>
       </div>
-    </section>
+    </motion.section>
   );
 }
