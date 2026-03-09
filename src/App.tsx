@@ -35,12 +35,12 @@ const App = () => (
               <Route path="/blog/:slug" element={<BlogArticle />} />
               <Route path="/calculadora" element={<Calculadora />} />
               <Route path="/dashboard" element={<DashboardLogin />} />
-              <Route path="/dashboard" element={<DashboardLayout />}>
-                <Route path="home" element={<DashboardHome />} />
-                <Route path="proyecto" element={<DashboardProyecto />} />
-                <Route path="documentos" element={<DashboardDocumentos />} />
-                <Route path="mensajes" element={<DashboardMensajes />} />
-                <Route path="soporte" element={<DashboardSoporte />} />
+              <Route element={<DashboardLayout />}>
+                <Route path="/dashboard/home" element={<DashboardHome />} />
+                <Route path="/dashboard/proyecto" element={<DashboardProyecto />} />
+                <Route path="/dashboard/documentos" element={<DashboardDocumentos />} />
+                <Route path="/dashboard/mensajes" element={<DashboardMensajes />} />
+                <Route path="/dashboard/soporte" element={<DashboardSoporte />} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
