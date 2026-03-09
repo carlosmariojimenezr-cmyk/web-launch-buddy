@@ -2,14 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { ArrowRight, MessageCircle, Phone, Mail, MapPin, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { MotionSection, MotionDiv } from "@/components/MotionComponents";
 
 export default function ContactSection() {
-  const { ref, isVisible } = useScrollAnimation();
   const { toast } = useToast();
   const { t } = useLanguage();
   const [form, setForm] = useState({ nombre: "", email: "", empresa: "", telefono: "", mensaje: "" });
@@ -35,16 +34,16 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contacto" className="py-16 md:py-20 relative overflow-hidden">
+    <MotionSection id="contacto" className="py-16 md:py-20 relative overflow-hidden" variant="fadeIn">
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-primary/3 blur-[120px]" />
-      <div className="container max-w-5xl relative" ref={ref}>
-        <div className={`text-center mb-12 ${isVisible ? "animate-fade-up" : "opacity-0"}`}>
+      <div className="container max-w-5xl relative">
+        <MotionDiv className="text-center mb-12">
           <span className="font-mono text-xs text-primary uppercase tracking-widest">{t("contact.tag")}</span>
           <h2 className="font-display text-4xl md:text-5xl font-bold uppercase mt-3 tracking-tight">{t("contact.headline")}</h2>
           <p className="text-muted-foreground mt-4 max-w-lg mx-auto">{t("contact.subtitle")}</p>
-        </div>
+        </MotionDiv>
 
-        <div className={`grid md:grid-cols-5 gap-10 ${isVisible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: "150ms" }}>
+        <MotionDiv className="grid md:grid-cols-5 gap-10" delay={0.15}>
           <div className="md:col-span-2 space-y-6">
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0"><Mail className="w-5 h-5 text-primary" /></div>
@@ -89,8 +88,8 @@ export default function ContactSection() {
               </Button>
             </div>
           </form>
-        </div>
+        </MotionDiv>
       </div>
-    </section>
+    </MotionSection>
   );
 }
