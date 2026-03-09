@@ -53,7 +53,7 @@ export default function ROICalculator() {
   );
 
   return (
-    <section id="calculadora" className="py-24 md:py-32 relative overflow-hidden" ref={ref}>
+    <section id="calculadora" className="py-16 md:py-20 relative overflow-hidden" ref={ref}>
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/3 blur-[150px]" />
 
       <div className="container max-w-5xl relative">
