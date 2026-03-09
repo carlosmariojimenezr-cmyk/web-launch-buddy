@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import NexovLogo from "@/components/NexovLogo";
+import { Link, useLocation } from "react-router-dom";
 
 const navLinks = [
-  { label: "Servicios", href: "#servicios" },
-  { label: "Proceso", href: "#proceso" },
-  { label: "Nosotros", href: "#nosotros" },
-  { label: "Casos", href: "#casos" },
+  { label: "Servicios", href: "/#servicios" },
+  { label: "Proceso", href: "/#proceso" },
+  { label: "Nosotros", href: "/#nosotros" },
+  { label: "Casos", href: "/#casos" },
+  { label: "Blog", href: "/blog" },
 ];
 
 export default function Navbar() {
@@ -28,27 +30,37 @@ export default function Navbar() {
     >
       <div className="container flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
-        <a href="#" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <NexovLogo size="md" />
-        </a>
+        </Link>
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.href.startsWith("/") && !link.href.includes("#") ? (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {link.label}
+              </a>
+            )
+          )}
         </div>
 
         {/* CTA */}
         <div className="hidden md:block">
           <Button asChild size="sm" className="font-semibold">
-            <a href="#contacto">Agendar llamada</a>
+            <a href="/#contacto">Agendar llamada</a>
           </Button>
         </div>
 
@@ -65,18 +77,29 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {open && (
         <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border px-6 pb-6 pt-2 space-y-4">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setOpen(false)}
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.href.startsWith("/") && !link.href.includes("#") ? (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => setOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => setOpen(false)}
+              >
+                {link.label}
+              </a>
+            )
+          )}
           <Button asChild size="sm" className="w-full font-semibold">
-            <a href="#contacto" onClick={() => setOpen(false)}>
+            <a href="/#contacto" onClick={() => setOpen(false)}>
               Agendar llamada
             </a>
           </Button>
