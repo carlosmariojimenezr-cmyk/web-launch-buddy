@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import { useBooking } from "@/contexts/BookingContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { motion } from "framer-motion";
 
 export default function HeroSection() {
   const booking = useBooking();
@@ -17,25 +18,45 @@ export default function HeroSection() {
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-primary/3 blur-[100px]" />
 
       <div className="container relative z-10 text-center max-w-4xl mx-auto px-4">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-secondary/50 mb-8 backdrop-blur-sm">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-secondary/50 mb-8 backdrop-blur-sm"
+        >
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
           <span className="text-xs font-mono text-muted-foreground">
             {t("hero.badge")}
           </span>
-        </div>
+        </motion.div>
 
-        <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold uppercase leading-[0.9] tracking-tight mb-6">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold uppercase leading-[0.9] tracking-tight mb-6"
+        >
           {t("hero.headline1")}{" "}
           <span className="text-gradient">{t("hero.headlineHighlight")}</span>{" "}
           {t("hero.headline2")}
-        </h1>
+        </motion.h1>
 
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+        >
           {t("hero.description")}{" "}
           <span className="text-foreground font-medium">{t("hero.descriptionBold")}</span>
-        </p>
+        </motion.p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
           <Button size="lg" className="text-base font-semibold px-8 gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-shadow" onClick={booking.open}>
             {t("hero.cta")}
             <ArrowRight size={18} />
@@ -46,12 +67,17 @@ export default function HeroSection() {
               {t("hero.ctaSecondary")}
             </a>
           </Button>
-        </div>
+        </motion.div>
 
-        <div className="mt-16 md:mt-24 flex flex-col items-center gap-2 animate-bounce opacity-40">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          transition={{ duration: 0.6, delay: 1.2 }}
+          className="mt-16 md:mt-24 flex flex-col items-center gap-2 animate-bounce"
+        >
           <span className="text-xs font-mono text-muted-foreground">{t("hero.scroll")}</span>
           <div className="w-px h-8 bg-gradient-to-b from-muted-foreground to-transparent" />
-        </div>
+        </motion.div>
       </div>
     </section>
   );
