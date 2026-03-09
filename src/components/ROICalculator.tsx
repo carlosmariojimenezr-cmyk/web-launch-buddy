@@ -1,6 +1,5 @@
 import { useState, useMemo } from "react";
 import { ArrowRight, MessageCircle, Clock, Bot, Wifi } from "lucide-react";
-import { ArrowRight, MessageCircle, Clock, Bot, Wifi } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useBooking } from "@/contexts/BookingContext";
 import { useLanguage } from "@/contexts/LanguageContext";
