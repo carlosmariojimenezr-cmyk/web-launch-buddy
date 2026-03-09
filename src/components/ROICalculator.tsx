@@ -226,11 +226,9 @@ export default function ROICalculator() {
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-3 mt-2">
-                <Button asChild size="lg" className="font-semibold gap-2 flex-1 shadow-lg shadow-primary/20">
-                  <a href="#contacto">
+                <Button size="lg" className="font-semibold gap-2 flex-1 shadow-lg shadow-primary/20" onClick={booking.open}>
                     Quiero estos resultados
                     <ArrowRight size={16} />
-                  </a>
                 </Button>
                 <Button
                   variant="outline"
