@@ -23,6 +23,7 @@ const Index = () => {
       <ContactSection />
       <Footer />
       <WhatsAppButton />
+      <ChatBot />
     </div>
   );
 };
