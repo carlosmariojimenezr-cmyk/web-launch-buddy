@@ -70,9 +70,9 @@ export default function ROICalculator() {
           <span className="font-mono text-xs text-primary uppercase tracking-widest">{t("calculator.tag")}</span>
           <h2 className="font-display text-4xl md:text-5xl font-bold uppercase mt-3 tracking-tight">{t("calculator.headline")}</h2>
           <p className="text-muted-foreground mt-4 max-w-lg mx-auto">{t("calculator.subtitle")}</p>
-        </div>
+        </MotionDiv>
 
-        <div className={`rounded-2xl border border-border bg-card p-8 md:p-12 lg:p-14 ${isVisible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: "150ms" }}>
+        <MotionDiv className="rounded-2xl border border-border bg-card p-8 md:p-12 lg:p-14" delay={0.15}>
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-14">
             {/* Inputs */}
             <div className="space-y-8">
