@@ -7,6 +7,7 @@ import ChatBot from "@/components/ChatBot";
 import { getArticleBySlug, getRelatedArticles } from "@/data/blogArticles";
 import { ArrowLeft, ArrowRight, Clock, Calendar, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useBooking } from "@/contexts/BookingContext";
 
 function formatDate(dateStr: string) {
   return new Date(dateStr + "T12:00:00").toLocaleDateString("es-CO", {
