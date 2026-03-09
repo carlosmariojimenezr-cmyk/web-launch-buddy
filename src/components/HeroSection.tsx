@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import { useBooking } from "@/contexts/BookingContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function HeroSection() {
   const booking = useBooking();
+  const { t } = useLanguage();
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background grid */}
       <div className="absolute inset-0 opacity-[0.03]" style={{
         backgroundImage: "radial-gradient(hsl(var(--primary)) 1px, transparent 1px)",
         backgroundSize: "32px 32px",
@@ -19,37 +20,37 @@ export default function HeroSection() {
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-secondary/50 mb-8 backdrop-blur-sm">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
           <span className="text-xs font-mono text-muted-foreground">
-            Tecnología para PYMEs colombianas
+            {t("hero.badge")}
           </span>
         </div>
 
         <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold uppercase leading-[0.9] tracking-tight mb-6">
-          Hacemos que la{" "}
-          <span className="text-gradient">IA trabaje</span>
+          {t("hero.headline1")}{" "}
+          <span className="text-gradient">{t("hero.headlineHighlight")}</span>
           <br />
-          para tu negocio
+          {t("hero.headline2")}
         </h1>
 
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-          Agentes inteligentes, automatizaciones y desarrollo web que transforman
-          la operación de tu empresa. <span className="text-foreground font-medium">Sin complicaciones.</span>
+          {t("hero.description")}{" "}
+          <span className="text-foreground font-medium">{t("hero.descriptionBold")}</span>
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button size="lg" className="text-base font-semibold px-8 gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-shadow" onClick={booking.open}>
-            Agendar una llamada gratis
+            {t("hero.cta")}
             <ArrowRight size={18} />
           </Button>
           <Button asChild variant="outline" size="lg" className="text-base font-semibold px-8 gap-2 border-muted-foreground/30 text-foreground hover:bg-secondary">
             <a href="#servicios">
               <Play size={16} />
-              Ver servicios
+              {t("hero.ctaSecondary")}
             </a>
           </Button>
         </div>
 
         <div className="mt-16 md:mt-24 flex flex-col items-center gap-2 animate-bounce opacity-40">
-          <span className="text-xs font-mono text-muted-foreground">Scroll</span>
+          <span className="text-xs font-mono text-muted-foreground">{t("hero.scroll")}</span>
           <div className="w-px h-8 bg-gradient-to-b from-muted-foreground to-transparent" />
         </div>
       </div>
