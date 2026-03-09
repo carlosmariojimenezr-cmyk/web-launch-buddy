@@ -1,4 +1,5 @@
 import { Instagram, Linkedin, Mail } from "lucide-react";
+import NexovLogo from "@/components/NexovLogo";
 
 export default function Footer() {
   return (
