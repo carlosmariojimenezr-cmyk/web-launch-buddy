@@ -10,6 +10,13 @@ import Index from "./pages/Index";
 import Blog from "./pages/Blog";
 import BlogArticle from "./pages/BlogArticle";
 import Calculadora from "./pages/Calculadora";
+import DashboardLogin from "./pages/DashboardLogin";
+import DashboardLayout from "./pages/DashboardLayout";
+import DashboardHome from "./pages/DashboardHome";
+import DashboardProyecto from "./pages/DashboardProyecto";
+import DashboardDocumentos from "./pages/DashboardDocumentos";
+import DashboardMensajes from "./pages/DashboardMensajes";
+import DashboardSoporte from "./pages/DashboardSoporte";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +34,14 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogArticle />} />
               <Route path="/calculadora" element={<Calculadora />} />
+              <Route path="/dashboard" element={<DashboardLogin />} />
+              <Route element={<DashboardLayout />}>
+                <Route path="/dashboard/home" element={<DashboardHome />} />
+                <Route path="/dashboard/proyecto" element={<DashboardProyecto />} />
+                <Route path="/dashboard/documentos" element={<DashboardDocumentos />} />
+                <Route path="/dashboard/mensajes" element={<DashboardMensajes />} />
+                <Route path="/dashboard/soporte" element={<DashboardSoporte />} />
+              </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
