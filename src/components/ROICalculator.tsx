@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { ArrowRight, MessageCircle, Clock, Bot, Wifi } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useBooking } from "@/contexts/BookingContext";
 
 // ── Calculation constants (easy to adjust) ──
 const AUTOMATION_RATE = 0.6;   // 60% of repetitive hours saved
