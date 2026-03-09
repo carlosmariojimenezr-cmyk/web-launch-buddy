@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { ArrowRight, MessageCircle, Clock, Bot, Wifi } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useBooking } from "@/contexts/BookingContext";
 
 // ── Calculation constants (easy to adjust) ──
 const AUTOMATION_RATE = 0.6;   // 60% of repetitive hours saved
@@ -24,6 +25,7 @@ function getEmployeeCount(option: string): number {
 
 export default function ROICalculator() {
   const { ref, isVisible } = useScrollAnimation();
+  const booking = useBooking();
   const [messages, setMessages] = useState(500);
   const [hours, setHours] = useState(15);
   const [employees, setEmployees] = useState<string>("6-15");
@@ -224,11 +226,9 @@ export default function ROICalculator() {
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-3 mt-2">
-                <Button asChild size="lg" className="font-semibold gap-2 flex-1 shadow-lg shadow-primary/20">
-                  <a href="#contacto">
+                <Button size="lg" className="font-semibold gap-2 flex-1 shadow-lg shadow-primary/20" onClick={booking.open}>
                     Quiero estos resultados
                     <ArrowRight size={16} />
-                  </a>
                 </Button>
                 <Button
                   variant="outline"

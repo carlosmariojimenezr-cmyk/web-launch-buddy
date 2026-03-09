@@ -7,6 +7,7 @@ import ChatBot from "@/components/ChatBot";
 import { getArticleBySlug, getRelatedArticles } from "@/data/blogArticles";
 import { ArrowLeft, ArrowRight, Clock, Calendar, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useBooking } from "@/contexts/BookingContext";
 
 function formatDate(dateStr: string) {
   return new Date(dateStr + "T12:00:00").toLocaleDateString("es-CO", {
@@ -74,6 +75,7 @@ function renderContent(content: string) {
 
 export default function BlogArticle() {
   const { slug } = useParams<{ slug: string }>();
+  const booking = useBooking();
   const article = slug ? getArticleBySlug(slug) : undefined;
 
   if (!article) return <Navigate to="/blog" replace />;
@@ -144,11 +146,9 @@ export default function BlogArticle() {
               Agenda una consulta gratuita y descubre cómo podemos ayudarte.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-5">
-              <Button asChild size="lg" className="font-semibold gap-2">
-                <a href="/#contacto">
+              <Button size="lg" className="font-semibold gap-2" onClick={booking.open}>
                   Agendar llamada gratis
                   <ArrowRight size={16} />
-                </a>
               </Button>
               <Button
                 variant="outline"

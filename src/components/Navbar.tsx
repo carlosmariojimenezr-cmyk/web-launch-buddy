@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import NexovLogo from "@/components/NexovLogo";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useBooking } from "@/contexts/BookingContext";
 
 const navLinks = [
   { label: "Servicios", href: "/#servicios" },
@@ -15,6 +16,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const booking = useBooking();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -59,8 +61,8 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="hidden md:block">
-          <Button asChild size="sm" className="font-semibold">
-            <a href="/#contacto">Agendar llamada</a>
+          <Button size="sm" className="font-semibold" onClick={booking.open}>
+            Agendar llamada
           </Button>
         </div>
 
@@ -98,10 +100,8 @@ export default function Navbar() {
               </a>
             )
           )}
-          <Button asChild size="sm" className="w-full font-semibold">
-            <a href="/#contacto" onClick={() => setOpen(false)}>
-              Agendar llamada
-            </a>
+          <Button size="sm" className="w-full font-semibold" onClick={() => { setOpen(false); booking.open(); }}>
+            Agendar llamada
           </Button>
         </div>
       )}
