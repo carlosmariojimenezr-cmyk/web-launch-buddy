@@ -26,8 +26,7 @@ export default function HeroSection() {
 
         <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold uppercase leading-[0.9] tracking-tight mb-6">
           {t("hero.headline1")}{" "}
-          <span className="text-gradient">{t("hero.headlineHighlight")}</span>
-          <br />
+          <span className="text-gradient">{t("hero.headlineHighlight")}</span>{" "}
           {t("hero.headline2")}
         </h1>
 

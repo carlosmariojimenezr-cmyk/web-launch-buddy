@@ -1,47 +1,14 @@
-import { useEffect, useState } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/data/translations";
 
-const metricValues = [
-  { value: 300, suffix: "%", prefix: "+" },
-  { value: 60, suffix: "%", prefix: "-" },
-  { value: 45, suffix: "%", prefix: "+" },
-  { value: 24, suffix: "/7", prefix: "" },
-];
-
-function AnimatedCounter({ target, prefix, suffix, active }: { target: number; prefix: string; suffix: string; active: boolean }) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!active) return;
-    let frame: number;
-    const duration = 1500;
-    const start = performance.now();
-    const animate = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(eased * target));
-      if (progress < 1) frame = requestAnimationFrame(animate);
-    };
-    frame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(frame);
-  }, [active, target]);
-
-  return (
-    <span className="font-display text-5xl md:text-6xl font-extrabold text-primary tabular-nums">
-      {prefix}{count}{suffix}
-    </span>
-  );
-}
-
 export default function CasesSection() {
   const { ref, isVisible } = useScrollAnimation(0.2);
   const { lang, t } = useLanguage();
-  const metricLabels = translations[lang].cases.metrics;
+  const scenarios = translations[lang].cases.scenarios;
 
   return (
-    <section id="casos" className="py-24 md:py-32 bg-secondary/20 relative overflow-hidden">
+    <section id="resultados" className="py-16 md:py-20 bg-secondary/20 relative overflow-hidden">
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-primary/3 blur-[150px]" />
 
       <div className="container relative" ref={ref}>
@@ -51,15 +18,16 @@ export default function CasesSection() {
           <p className="text-muted-foreground mt-4 max-w-lg mx-auto">{t("cases.subtitle")}</p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto">
-          {metricValues.map((m, i) => (
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {scenarios.map((s, i) => (
             <div
               key={i}
-              className={`text-center p-6 rounded-xl bg-card/50 border border-border/50 ${isVisible ? "animate-fade-up" : "opacity-0"}`}
+              className={`p-6 rounded-xl bg-card border border-border hover:border-primary/40 transition-all duration-500 ${isVisible ? "animate-fade-up" : "opacity-0"}`}
               style={{ animationDelay: `${i * 100}ms` }}
             >
-              <AnimatedCounter target={m.value} prefix={m.prefix} suffix={m.suffix} active={isVisible} />
-              <p className="text-sm text-muted-foreground mt-3 font-medium">{metricLabels[i].label}</p>
+              <span className="font-display text-5xl font-bold text-primary block mb-3">{s.number}</span>
+              <h3 className="font-display text-lg font-bold uppercase tracking-tight mb-2">{s.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{s.description}</p>
             </div>
           ))}
         </div>

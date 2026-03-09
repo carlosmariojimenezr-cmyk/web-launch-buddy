@@ -11,7 +11,7 @@ export default function WhyNexovSection() {
   const reasons = translations[lang].whyNexov.reasons;
 
   return (
-    <section id="nosotros" className="py-24 md:py-32">
+    <section id="nosotros" className="py-16 md:py-20">
       <div className="container" ref={ref}>
         <div className="text-center mb-16">
           <span className="font-mono text-xs text-primary uppercase tracking-widest">{t("whyNexov.tag")}</span>

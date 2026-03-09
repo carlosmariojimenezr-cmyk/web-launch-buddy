@@ -45,7 +45,7 @@ export default function ServicesSection() {
                 <h3 className="font-display text-xl font-bold uppercase tracking-tight">{s.title}</h3>
                 <p className="text-xs font-mono text-primary mt-1 mb-3">{s.subtitle}</p>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-4">{s.description}</p>
-                <span className="inline-flex items-center gap-1 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="inline-flex items-center gap-1 text-xs font-medium text-primary">
                   {t("services.learnMore")} <ArrowRight size={12} />
                 </span>
               </div>

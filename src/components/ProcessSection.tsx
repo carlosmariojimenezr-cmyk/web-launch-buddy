@@ -12,7 +12,7 @@ export default function ProcessSection() {
   const steps = translations[lang].process.steps;
 
   return (
-    <section id="proceso" className="py-24 md:py-32 bg-secondary/20 relative overflow-hidden">
+    <section id="proceso" className="py-16 md:py-20 bg-secondary/20 relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full bg-primary/3 blur-[150px]" />
 
       <div className="container relative" ref={ref}>

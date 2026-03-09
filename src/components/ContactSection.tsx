@@ -57,6 +57,7 @@ export default function ContactSection() {
               <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0"><Phone className="w-5 h-5 text-primary" /></div>
               <div>
                 <p className="text-sm font-semibold text-foreground">{t("contact.whatsapp")}</p>
+                {/* TODO: Reemplazar con número real de WhatsApp */}
                 <a href="https://wa.me/573000000000" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">+57 300 000 0000</a>
               </div>
             </div>

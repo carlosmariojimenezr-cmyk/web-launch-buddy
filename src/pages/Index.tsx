@@ -19,8 +19,9 @@ const Index = () => {
       <ServicesSection />
       <ProcessSection />
       <WhyNexovSection />
-      <ROICalculator />
+      <AboutSection />
       <CasesSection />
+      <ROICalculator />
       <ContactSection />
       <Footer />
       <WhatsAppButton />

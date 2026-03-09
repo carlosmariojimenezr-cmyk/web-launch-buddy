@@ -18,8 +18,7 @@ export default function Navbar() {
     { label: t("nav.services"), href: `${prefix}/#servicios` },
     { label: t("nav.process"), href: `${prefix}/#proceso` },
     { label: t("nav.about"), href: `${prefix}/#nosotros` },
-    { label: t("nav.cases"), href: `${prefix}/#casos` },
-    { label: t("nav.blog"), href: `${prefix}/blog` },
+    { label: t("nav.contact"), href: `${prefix}/#contacto` },
   ];
 
   useEffect(() => {
