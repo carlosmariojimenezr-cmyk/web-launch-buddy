@@ -4,6 +4,7 @@ import TrustBar from "@/components/TrustBar";
 import ServicesSection from "@/components/ServicesSection";
 import ProcessSection from "@/components/ProcessSection";
 import WhyNexovSection from "@/components/WhyNexovSection";
+import ROICalculator from "@/components/ROICalculator";
 import CasesSection from "@/components/CasesSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
@@ -19,6 +20,7 @@ const Index = () => {
       <ServicesSection />
       <ProcessSection />
       <WhyNexovSection />
+      <ROICalculator />
       <CasesSection />
       <ContactSection />
       <Footer />
