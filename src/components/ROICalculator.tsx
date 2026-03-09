@@ -4,6 +4,8 @@ import { ArrowRight, MessageCircle, Clock, Bot, Wifi } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useBooking } from "@/contexts/BookingContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { MotionDiv } from "@/components/MotionComponents";
+import { motion } from "framer-motion";
 
 const AUTOMATION_RATE = 0.6;
 const WEEKS_PER_MONTH = 4;
