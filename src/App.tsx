@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import Blog from "./pages/Blog";
 import BlogArticle from "./pages/BlogArticle";
+import Calculadora from "./pages/Calculadora";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
