@@ -16,7 +16,6 @@ const Index = () => {
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       <HeroSection />
-      <TrustBar />
       <ServicesSection />
       <ProcessSection />
       <WhyNexovSection />
