@@ -123,9 +123,9 @@ export default function ContactSection() {
               className="bg-card border-border sm:col-span-2 min-h-[120px]"
             />
             <div className="sm:col-span-2 flex flex-col sm:flex-row gap-3">
-              <Button type="submit" size="lg" className="font-semibold flex-1 gap-2 shadow-lg shadow-primary/20">
-                Agendar llamada
-                <ArrowRight size={18} />
+              <Button type="submit" size="lg" disabled={loading} className="font-semibold flex-1 gap-2 shadow-lg shadow-primary/20">
+                {loading ? <Loader2 size={18} className="animate-spin" /> : <ArrowRight size={18} />}
+                {loading ? "Enviando..." : "Agendar llamada"}
               </Button>
               <Button
                 type="button"
