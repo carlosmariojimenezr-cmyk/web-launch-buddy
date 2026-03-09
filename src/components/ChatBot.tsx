@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { X, Send, MessageSquare } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface Message {
   id: string;
@@ -7,6 +8,10 @@ interface Message {
   content: string;
   quickReplies?: string[];
 }
+
+type ChatMsg = { role: "user" | "assistant"; content: string };
+
+const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
 const INITIAL_MESSAGE: Message = {
   id: "welcome",
@@ -20,125 +25,80 @@ const INITIAL_MESSAGE: Message = {
   ],
 };
 
-function getResponse(userMessage: string): Message {
-  const msg = userMessage.toLowerCase();
-  const id = crypto.randomUUID();
+async function streamChat({
+  messages,
+  onDelta,
+  onDone,
+}: {
+  messages: ChatMsg[];
+  onDelta: (text: string) => void;
+  onDone: () => void;
+}) {
+  const resp = await fetch(CHAT_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+    },
+    body: JSON.stringify({ messages }),
+  });
 
-  if (
-    msg.includes("servicio") ||
-    msg.includes("ofrecen") ||
-    msg.includes("hacen")
-  ) {
-    return {
-      id,
-      role: "bot",
-      content:
-        "Ofrecemos 4 servicios principales:\n\n🤖 **Agentes de IA** para WhatsApp y web — chatbots que atienden clientes 24/7\n🧠 **Asesoría en IA** — te ayudamos a implementar inteligencia artificial en tu negocio\n🌐 **Páginas web** profesionales y optimizadas\n⚡ **Automatizaciones** — eliminamos tareas repetitivas\n\n¿Sobre cuál te gustaría saber más?",
-      quickReplies: ["Agentes de IA", "Asesoría", "Páginas web", "Automatizaciones"],
-    };
+  if (!resp.ok || !resp.body) {
+    const errorData = await resp.json().catch(() => ({}));
+    throw new Error(errorData.error || `Error ${resp.status}`);
   }
 
-  if (
-    msg.includes("precio") ||
-    msg.includes("cuesta") ||
-    msg.includes("costo") ||
-    msg.includes("cuánto") ||
-    msg.includes("cuanto") ||
-    msg.includes("tarifa")
-  ) {
-    return {
-      id,
-      role: "bot",
-      content:
-        "Cada proyecto es diferente, así que nuestros precios se ajustan a lo que realmente necesitas. No manejamos paquetes inflados.\n\nLo mejor es agendar una llamada gratuita de 30 minutos donde entendemos tu caso y te damos una propuesta clara. ¿Te gustaría agendar?",
-      quickReplies: ["Sí, agendar llamada", "Prefiero escribir por WhatsApp"],
-    };
+  const reader = resp.body.getReader();
+  const decoder = new TextDecoder();
+  let textBuffer = "";
+  let streamDone = false;
+
+  while (!streamDone) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    textBuffer += decoder.decode(value, { stream: true });
+
+    let newlineIndex: number;
+    while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
+      let line = textBuffer.slice(0, newlineIndex);
+      textBuffer = textBuffer.slice(newlineIndex + 1);
+
+      if (line.endsWith("\r")) line = line.slice(0, -1);
+      if (line.startsWith(":") || line.trim() === "") continue;
+      if (!line.startsWith("data: ")) continue;
+
+      const jsonStr = line.slice(6).trim();
+      if (jsonStr === "[DONE]") { streamDone = true; break; }
+
+      try {
+        const parsed = JSON.parse(jsonStr);
+        const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+        if (content) onDelta(content);
+      } catch {
+        textBuffer = line + "\n" + textBuffer;
+        break;
+      }
+    }
   }
 
-  if (
-    msg.includes("agendar") ||
-    msg.includes("llamada") ||
-    msg.includes("cita") ||
-    msg.includes("reunión") ||
-    msg.includes("reunion")
-  ) {
-    return {
-      id,
-      role: "bot",
-      content:
-        "¡Perfecto! Puedes agendar directamente en nuestra sección de contacto 👇\n\nO si prefieres, escríbenos por WhatsApp y te respondemos en minutos.",
-      quickReplies: ["Ir a contacto", "Abrir WhatsApp"],
-    };
+  // Flush remaining
+  if (textBuffer.trim()) {
+    for (let raw of textBuffer.split("\n")) {
+      if (!raw) continue;
+      if (raw.endsWith("\r")) raw = raw.slice(0, -1);
+      if (raw.startsWith(":") || raw.trim() === "") continue;
+      if (!raw.startsWith("data: ")) continue;
+      const jsonStr = raw.slice(6).trim();
+      if (jsonStr === "[DONE]") continue;
+      try {
+        const parsed = JSON.parse(jsonStr);
+        const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+        if (content) onDelta(content);
+      } catch { /* ignore */ }
+    }
   }
 
-  if (
-    msg.includes("agente") ||
-    msg.includes("chatbot") ||
-    msg.includes("bot") ||
-    msg.includes("whatsapp")
-  ) {
-    return {
-      id,
-      role: "bot",
-      content:
-        "Nuestros agentes de IA pueden:\n\n✅ Responder preguntas frecuentes automáticamente\n✅ Agendar citas y reservas\n✅ Calificar leads y recopilar información\n✅ Procesar pedidos básicos\n✅ Atender en varios idiomas\n\nFuncionan en WhatsApp, tu sitio web, o ambos. De hecho, ¡estás hablando con uno ahora mismo! 😉\n\n¿Quieres ver cómo funcionaría en tu negocio?",
-      quickReplies: ["Sí, quiero saber más", "Agendar llamada"],
-    };
-  }
-
-  if (
-    msg.includes("asesoría") ||
-    msg.includes("asesoria") ||
-    msg.includes("consultoría") ||
-    msg.includes("consultoria")
-  ) {
-    return {
-      id,
-      role: "bot",
-      content:
-        "Nuestra asesoría en IA te ayuda a identificar las mejores oportunidades de automatización e inteligencia artificial para tu negocio.\n\n📊 Analizamos tus procesos actuales\n🎯 Identificamos qué automatizar primero\n🗺️ Creamos un roadmap de implementación\n💡 Te acompañamos en cada paso\n\n¿Te gustaría agendar una consulta gratuita?",
-      quickReplies: ["Sí, agendar", "¿Cuánto cuesta?"],
-    };
-  }
-
-  if (
-    msg.includes("web") ||
-    msg.includes("página") ||
-    msg.includes("pagina") ||
-    msg.includes("sitio")
-  ) {
-    return {
-      id,
-      role: "bot",
-      content:
-        "Creamos páginas web que no solo se ven bien, sino que convierten visitantes en clientes:\n\n🚀 Ultra rápidas y optimizadas para SEO\n📱 Responsivas en todos los dispositivos\n🎯 Diseñadas para generar leads\n🔗 Integradas con WhatsApp y herramientas de IA\n\n¿Quieres ver ejemplos de nuestro trabajo?",
-      quickReplies: ["Ver ejemplos", "Agendar llamada"],
-    };
-  }
-
-  if (
-    msg.includes("automatiza") ||
-    msg.includes("automática") ||
-    msg.includes("automatica") ||
-    msg.includes("tareas")
-  ) {
-    return {
-      id,
-      role: "bot",
-      content:
-        "Con nuestras automatizaciones eliminamos las tareas repetitivas de tu negocio:\n\n⚡ Facturación automática\n📧 Seguimiento de clientes por email/WhatsApp\n📊 Reportes generados automáticamente\n🔔 Alertas de inventario\n📱 Publicación en redes sociales\n\nTu equipo se enfoca en lo importante mientras la tecnología hace el resto.",
-      quickReplies: ["Quiero automatizar", "¿Cuánto cuesta?"],
-    };
-  }
-
-  // Fallback
-  return {
-    id,
-    role: "bot",
-    content:
-      "Gracias por tu interés. Para darte la mejor respuesta, te recomiendo agendar una llamada gratuita con nuestro equipo. ¿Te gustaría hacerlo?",
-    quickReplies: ["Sí, agendar", "Tengo otra pregunta"],
-  };
+  onDone();
 }
 
 function handleAction(text: string) {
@@ -169,20 +129,18 @@ export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
+  const [chatHistory, setChatHistory] = useState<ChatMsg[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
 
-  // Show tooltip after 5 seconds
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!isOpen) setShowTooltip(true);
-    }, 5000);
+    const timer = setTimeout(() => { if (!isOpen) setShowTooltip(true); }, 5000);
     return () => clearTimeout(timer);
   }, []);
 
-  // Hide tooltip after 4 seconds
   useEffect(() => {
     if (showTooltip) {
       const timer = setTimeout(() => setShowTooltip(false), 4000);
@@ -190,36 +148,65 @@ export default function ChatBot() {
     }
   }, [showTooltip]);
 
-  // Auto-scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  // Focus input when opened
   useEffect(() => {
     if (isOpen) inputRef.current?.focus();
   }, [isOpen]);
 
-  const sendMessage = (text: string) => {
-    if (!text.trim()) return;
+  const sendMessage = async (text: string) => {
+    if (!text.trim() || isTyping) return;
 
-    // Check for navigation actions
-    if (handleAction(text)) {
-      setIsOpen(false);
-      return;
-    }
+    if (handleAction(text)) { setIsOpen(false); return; }
 
     const userMsg: Message = { id: crypto.randomUUID(), role: "user", content: text };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsTyping(true);
 
-    // Simulate typing delay
-    setTimeout(() => {
-      const botReply = getResponse(text);
-      setMessages((prev) => [...prev, botReply]);
+    const newHistory: ChatMsg[] = [...chatHistory, { role: "user", content: text }];
+    setChatHistory(newHistory);
+
+    const botId = crypto.randomUUID();
+    let assistantContent = "";
+
+    const upsertBot = (chunk: string) => {
+      assistantContent += chunk;
+      setMessages((prev) => {
+        const last = prev[prev.length - 1];
+        if (last?.id === botId) {
+          return prev.map((m, i) => i === prev.length - 1 ? { ...m, content: assistantContent } : m);
+        }
+        return [...prev, { id: botId, role: "bot", content: assistantContent }];
+      });
+    };
+
+    try {
+      await streamChat({
+        messages: newHistory,
+        onDelta: upsertBot,
+        onDone: () => {
+          setIsTyping(false);
+          setChatHistory((prev) => [...prev, { role: "assistant", content: assistantContent }]);
+        },
+      });
+    } catch (e) {
       setIsTyping(false);
-    }, 800 + Math.random() * 700);
+      const errorMsg = e instanceof Error ? e.message : "Error desconocido";
+      toast({ title: "Error", description: errorMsg, variant: "destructive" });
+      // Fallback message
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          role: "bot",
+          content: "Lo siento, hubo un problema al conectar. Puedes escribirnos por WhatsApp o intentar de nuevo.",
+          quickReplies: ["Abrir WhatsApp", "Tengo otra pregunta"],
+        },
+      ]);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -231,7 +218,6 @@ export default function ChatBot() {
     <>
       {/* Floating bubble */}
       <div className="fixed bottom-6 left-6 z-50">
-        {/* Tooltip */}
         {showTooltip && !isOpen && (
           <div className="absolute bottom-16 left-0 bg-card text-foreground text-sm px-4 py-2 rounded-xl shadow-lg border border-border whitespace-nowrap animate-fade-in">
             ¡Hola! ¿Puedo ayudarte?
@@ -311,7 +297,7 @@ export default function ChatBot() {
               </div>
             ))}
 
-            {isTyping && (
+            {isTyping && !messages.some(m => m.id && m.content === "") && (
               <div className="flex items-center gap-1 px-4 py-3 bg-card rounded-2xl rounded-bl-md w-fit">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0ms" }} />
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "150ms" }} />
@@ -332,11 +318,12 @@ export default function ChatBot() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Escribe tu pregunta..."
-              className="flex-1 bg-card border border-border rounded-xl px-3.5 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
+              disabled={isTyping}
+              className="flex-1 bg-card border border-border rounded-xl px-3.5 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-colors disabled:opacity-50"
             />
             <button
               type="submit"
-              disabled={!input.trim()}
+              disabled={!input.trim() || isTyping}
               className="w-9 h-9 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shrink-0 disabled:opacity-40 hover:brightness-110 transition-all"
             >
               <Send size={16} />
