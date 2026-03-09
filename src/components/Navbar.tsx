@@ -16,6 +16,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const booking = useBooking();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
