@@ -100,10 +100,8 @@ export default function Navbar() {
               </a>
             )
           )}
-          <Button asChild size="sm" className="w-full font-semibold">
-            <a href="/#contacto" onClick={() => setOpen(false)}>
-              Agendar llamada
-            </a>
+          <Button size="sm" className="w-full font-semibold" onClick={() => { setOpen(false); booking.open(); }}>
+            Agendar llamada
           </Button>
         </div>
       )}
