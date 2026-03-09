@@ -29,7 +29,7 @@ function AnimatedCounter({ target, prefix, suffix, active }: { target: number; p
   }, [active, target]);
 
   return (
-    <span className="font-display text-5xl md:text-6xl font-extrabold text-primary">
+    <span className="font-display text-5xl md:text-6xl font-extrabold text-primary tabular-nums">
       {prefix}{count}{suffix}
     </span>
   );
@@ -39,8 +39,10 @@ export default function CasesSection() {
   const { ref, isVisible } = useScrollAnimation(0.2);
 
   return (
-    <section id="casos" className="py-24 md:py-32 bg-secondary/20">
-      <div className="container" ref={ref}>
+    <section id="casos" className="py-24 md:py-32 bg-secondary/20 relative overflow-hidden">
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-primary/3 blur-[150px]" />
+
+      <div className="container relative" ref={ref}>
         <div className="text-center mb-16">
           <span className="font-mono text-xs text-primary uppercase tracking-widest">
             Resultados
@@ -57,11 +59,11 @@ export default function CasesSection() {
           {metrics.map((m, i) => (
             <div
               key={m.label}
-              className={`text-center ${isVisible ? "animate-fade-up" : "opacity-0"}`}
+              className={`text-center p-6 rounded-xl bg-card/50 border border-border/50 ${isVisible ? "animate-fade-up" : "opacity-0"}`}
               style={{ animationDelay: `${i * 100}ms` }}
             >
               <AnimatedCounter target={m.value} prefix={m.prefix} suffix={m.suffix} active={isVisible} />
-              <p className="text-sm text-muted-foreground mt-2">{m.label}</p>
+              <p className="text-sm text-muted-foreground mt-3 font-medium">{m.label}</p>
             </div>
           ))}
         </div>

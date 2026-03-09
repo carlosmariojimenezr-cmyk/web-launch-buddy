@@ -11,9 +11,11 @@ export default function HeroSection() {
       }} />
       {/* Glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" />
+      {/* Secondary glow */}
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-primary/3 blur-[100px]" />
 
       <div className="container relative z-10 text-center max-w-4xl mx-auto px-4">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-secondary/50 mb-8">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-secondary/50 mb-8 backdrop-blur-sm">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
           <span className="text-xs font-mono text-muted-foreground">
             Tecnología para PYMEs colombianas
@@ -29,11 +31,11 @@ export default function HeroSection() {
 
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
           Agentes inteligentes, automatizaciones y desarrollo web que transforman
-          la operación de tu empresa. Sin complicaciones.
+          la operación de tu empresa. <span className="text-foreground font-medium">Sin complicaciones.</span>
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button asChild size="lg" className="text-base font-semibold px-8 gap-2">
+          <Button asChild size="lg" className="text-base font-semibold px-8 gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-shadow">
             <a href="#contacto">
               Agendar una llamada gratis
               <ArrowRight size={18} />
@@ -45,6 +47,12 @@ export default function HeroSection() {
               Ver servicios
             </a>
           </Button>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="mt-16 md:mt-24 flex flex-col items-center gap-2 animate-bounce opacity-40">
+          <span className="text-xs font-mono text-muted-foreground">Scroll</span>
+          <div className="w-px h-8 bg-gradient-to-b from-muted-foreground to-transparent" />
         </div>
       </div>
     </section>

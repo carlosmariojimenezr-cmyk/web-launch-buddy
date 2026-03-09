@@ -1,4 +1,4 @@
-import { Bot, BrainCircuit, Globe, Zap } from "lucide-react";
+import { Bot, BrainCircuit, Globe, Zap, ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Badge } from "@/components/ui/badge";
 
@@ -52,13 +52,13 @@ export default function ServicesSection() {
           {services.map((s, i) => (
             <div
               key={s.title}
-              className={`group relative p-6 rounded-xl bg-card border border-border hover:border-primary/40 hover:glow-primary transition-all duration-500 ${
+              className={`group relative p-6 rounded-xl bg-card border border-border hover:border-primary/40 transition-all duration-500 cursor-default ${
                 isVisible ? "animate-fade-up" : "opacity-0"
               }`}
               style={{ animationDelay: `${i * 120}ms` }}
             >
               {s.popular && (
-                <Badge className="absolute -top-3 right-4 text-[10px] font-mono uppercase tracking-wider">
+                <Badge className="absolute -top-3 right-4 text-[10px] font-mono uppercase tracking-wider shadow-lg shadow-primary/20">
                   Más popular
                 </Badge>
               )}
@@ -69,9 +69,12 @@ export default function ServicesSection() {
                 {s.title}
               </h3>
               <p className="text-xs font-mono text-primary mt-1 mb-3">{s.subtitle}</p>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
                 {s.description}
               </p>
+              <span className="inline-flex items-center gap-1 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                Saber más <ArrowRight size={12} />
+              </span>
             </div>
           ))}
         </div>
