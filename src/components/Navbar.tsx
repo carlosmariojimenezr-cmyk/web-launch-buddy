@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import NexovLogo from "@/components/NexovLogo";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useBooking } from "@/contexts/BookingContext";
 
 const navLinks = [
   { label: "Servicios", href: "/#servicios" },
