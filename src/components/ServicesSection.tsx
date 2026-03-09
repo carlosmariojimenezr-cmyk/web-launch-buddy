@@ -12,7 +12,7 @@ export default function ServicesSection() {
   const cards = translations[lang].services.cards;
 
   return (
-    <section id="servicios" className="py-24 md:py-32">
+    <section id="servicios" className="py-16 md:py-20">
       <div className="container" ref={ref}>
         <div className="text-center mb-16">
           <span className="font-mono text-xs text-primary uppercase tracking-widest">
