@@ -28,11 +28,8 @@ export default function Navbar() {
     >
       <div className="container flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-primary rounded-sm" />
-          <span className="font-display text-2xl font-bold tracking-tight text-foreground">
-            NEXOV
-          </span>
+        <a href="#" className="flex items-center">
+          <NexovLogo size="md" />
         </a>
 
         {/* Desktop Links */}

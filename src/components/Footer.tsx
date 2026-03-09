@@ -8,9 +8,8 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-8 mb-10">
           {/* Brand */}
           <div className="md:col-span-1">
-            <a href="#" className="flex items-center gap-2 mb-3">
-              <div className="w-6 h-6 bg-primary rounded-sm" />
-              <span className="font-display text-xl font-bold tracking-tight">NEXOV</span>
+            <a href="#" className="flex items-center mb-3">
+              <NexovLogo size="sm" />
             </a>
             <p className="text-sm text-muted-foreground leading-relaxed">
               IA y automatización para PYMEs colombianas.
