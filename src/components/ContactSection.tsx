@@ -35,7 +35,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contacto" className="py-24 md:py-32 relative overflow-hidden">
+    <section id="contacto" className="py-16 md:py-20 relative overflow-hidden">
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-primary/3 blur-[120px]" />
       <div className="container max-w-5xl relative" ref={ref}>
         <div className={`text-center mb-12 ${isVisible ? "animate-fade-up" : "opacity-0"}`}>
