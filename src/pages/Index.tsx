@@ -6,6 +6,7 @@ import ProcessSection from "@/components/ProcessSection";
 import WhyNexovSection from "@/components/WhyNexovSection";
 import ROICalculator from "@/components/ROICalculator";
 import CasesSection from "@/components/CasesSection";
+import FAQSection from "@/components/FAQSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
