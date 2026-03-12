@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FadeIn, StaggerContainer, StaggerItem } from "./MotionComponents";
+import { MotionDiv, StaggerContainer, StaggerItem } from "./MotionComponents";
 
 const faqData = {
   es: {
