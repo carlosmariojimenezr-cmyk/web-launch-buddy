@@ -23,6 +23,7 @@ const Index = () => {
       <AboutSection />
       <CasesSection />
       <ROICalculator />
+      <FAQSection />
       <ContactSection />
       <Footer />
       <WhatsAppButton />

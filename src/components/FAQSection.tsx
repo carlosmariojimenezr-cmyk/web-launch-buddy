@@ -100,7 +100,7 @@ const FAQSection = () => {
               {content.subtitle}
             </p>
           </div>
-        </FadeIn>
+        </MotionDiv>
 
         <StaggerContainer className="space-y-0">
           <Accordion type="single" collapsible className="w-full">
