@@ -19,9 +19,9 @@ export default function HeroSection() {
 
       <div className="container relative z-10 text-center max-w-4xl mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.4, delay: 0, ease: [0.22, 1, 0.36, 1] }}
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-secondary/50 mb-8 backdrop-blur-sm"
         >
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
@@ -31,9 +31,9 @@ export default function HeroSection() {
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold uppercase leading-[0.9] tracking-tight mb-6"
         >
           {t("hero.headline1")}{" "}
@@ -42,9 +42,9 @@ export default function HeroSection() {
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
         >
           {t("hero.description")}{" "}
@@ -52,9 +52,9 @@ export default function HeroSection() {
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <Button size="lg" className="text-base font-semibold px-8 gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-shadow" onClick={booking.open}>
@@ -72,7 +72,7 @@ export default function HeroSection() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.4 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
           className="mt-16 md:mt-24 flex flex-col items-center gap-2 animate-bounce"
         >
           <span className="text-xs font-mono text-muted-foreground">{t("hero.scroll")}</span>
