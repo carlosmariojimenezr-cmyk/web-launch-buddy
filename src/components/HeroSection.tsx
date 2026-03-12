@@ -72,7 +72,7 @@ export default function HeroSection() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.4 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
           className="mt-16 md:mt-24 flex flex-col items-center gap-2 animate-bounce"
         >
           <span className="text-xs font-mono text-muted-foreground">{t("hero.scroll")}</span>
