@@ -19,9 +19,9 @@ export default function HeroSection() {
 
       <div className="container relative z-10 text-center max-w-4xl mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.4, delay: 0, ease: [0.22, 1, 0.36, 1] }}
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-secondary/50 mb-8 backdrop-blur-sm"
         >
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
