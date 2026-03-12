@@ -27,10 +27,10 @@ export default function ProcessSection() {
             const Icon = icons[i];
             return (
               <StaggerItem key={step.num} className="relative text-center">
-                <span className="font-display text-7xl md:text-8xl font-extrabold text-primary/8 absolute -top-6 left-1/2 -translate-x-1/2 select-none pointer-events-none">
-                  {step.num}
-                </span>
-                <div className="relative z-10 pt-8">
+                <div className="relative z-10">
+                  <span className="font-display text-5xl font-extrabold text-primary/15 block mb-2 select-none">
+                    {step.num}
+                  </span>
                   <div className="w-14 h-14 rounded-xl bg-card border border-border flex items-center justify-center mx-auto mb-5">
                     <Icon className="w-7 h-7 text-primary" />
                   </div>
