@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,17 +9,19 @@ import { BookingProvider } from "@/contexts/BookingContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import BookingModal from "@/components/BookingModal";
 import Index from "./pages/Index";
-import Blog from "./pages/Blog";
-import BlogArticle from "./pages/BlogArticle";
-import Calculadora from "./pages/Calculadora";
-import DashboardLogin from "./pages/DashboardLogin";
-import DashboardLayout from "./pages/DashboardLayout";
-import DashboardHome from "./pages/DashboardHome";
-import DashboardProyecto from "./pages/DashboardProyecto";
-import DashboardDocumentos from "./pages/DashboardDocumentos";
-import DashboardMensajes from "./pages/DashboardMensajes";
-import DashboardSoporte from "./pages/DashboardSoporte";
-import NotFound from "./pages/NotFound";
+
+// Lazy-load non-critical routes to reduce initial JS bundle
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogArticle = lazy(() => import("./pages/BlogArticle"));
+const Calculadora = lazy(() => import("./pages/Calculadora"));
+const DashboardLogin = lazy(() => import("./pages/DashboardLogin"));
+const DashboardLayout = lazy(() => import("./pages/DashboardLayout"));
+const DashboardHome = lazy(() => import("./pages/DashboardHome"));
+const DashboardProyecto = lazy(() => import("./pages/DashboardProyecto"));
+const DashboardDocumentos = lazy(() => import("./pages/DashboardDocumentos"));
+const DashboardMensajes = lazy(() => import("./pages/DashboardMensajes"));
+const DashboardSoporte = lazy(() => import("./pages/DashboardSoporte"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
@@ -27,30 +30,32 @@ const AppRoutes = () => (
     <BookingProvider>
       <Toaster />
       <Sonner />
-      <Routes>
-        {/* Spanish routes (default) */}
-        <Route path="/" element={<Index />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:slug" element={<BlogArticle />} />
-        <Route path="/calculadora" element={<Calculadora />} />
+      <Suspense fallback={<div className="min-h-screen bg-background" />}>
+        <Routes>
+          {/* Spanish routes (default) */}
+          <Route path="/" element={<Index />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogArticle />} />
+          <Route path="/calculadora" element={<Calculadora />} />
 
-        {/* English routes */}
-        <Route path="/en" element={<Index />} />
-        <Route path="/en/blog" element={<Blog />} />
-        <Route path="/en/blog/:slug" element={<BlogArticle />} />
-        <Route path="/en/calculator" element={<Calculadora />} />
+          {/* English routes */}
+          <Route path="/en" element={<Index />} />
+          <Route path="/en/blog" element={<Blog />} />
+          <Route path="/en/blog/:slug" element={<BlogArticle />} />
+          <Route path="/en/calculator" element={<Calculadora />} />
 
-        {/* Dashboard (no i18n) */}
-        <Route path="/dashboard" element={<DashboardLogin />} />
-        <Route element={<DashboardLayout />}>
-          <Route path="/dashboard/home" element={<DashboardHome />} />
-          <Route path="/dashboard/proyecto" element={<DashboardProyecto />} />
-          <Route path="/dashboard/documentos" element={<DashboardDocumentos />} />
-          <Route path="/dashboard/mensajes" element={<DashboardMensajes />} />
-          <Route path="/dashboard/soporte" element={<DashboardSoporte />} />
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          {/* Dashboard (no i18n) */}
+          <Route path="/dashboard" element={<DashboardLogin />} />
+          <Route element={<DashboardLayout />}>
+            <Route path="/dashboard/home" element={<DashboardHome />} />
+            <Route path="/dashboard/proyecto" element={<DashboardProyecto />} />
+            <Route path="/dashboard/documentos" element={<DashboardDocumentos />} />
+            <Route path="/dashboard/mensajes" element={<DashboardMensajes />} />
+            <Route path="/dashboard/soporte" element={<DashboardSoporte />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
       <BookingModal />
     </BookingProvider>
   </LanguageProvider>
