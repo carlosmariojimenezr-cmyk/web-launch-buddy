@@ -88,7 +88,7 @@ const FAQSection = () => {
   return (
     <section id="faq" className="py-20 md:py-32 bg-secondary/30">
       <div className="container mx-auto px-4 max-w-4xl">
-        <FadeIn>
+        <MotionDiv variant="fadeIn">
           <div className="text-center mb-12 md:mb-16">
             <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold tracking-wide mb-4">
               {content.tag}
