@@ -52,9 +52,9 @@ export default function HeroSection() {
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <Button size="lg" className="text-base font-semibold px-8 gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-shadow" onClick={booking.open}>
