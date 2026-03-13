@@ -38,12 +38,14 @@ const AppRoutes = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogArticle />} />
           <Route path="/calculadora" element={<Calculadora />} />
+          <Route path="/planes" element={<Planes />} />
 
           {/* English routes */}
           <Route path="/en" element={<Index />} />
           <Route path="/en/blog" element={<Blog />} />
           <Route path="/en/blog/:slug" element={<BlogArticle />} />
           <Route path="/en/calculator" element={<Calculadora />} />
+          <Route path="/en/plans" element={<Planes />} />
 
           {/* Dashboard (no i18n) */}
           <Route path="/dashboard" element={<DashboardLogin />} />
