@@ -21,6 +21,7 @@ const DashboardProyecto = lazy(() => import("./pages/DashboardProyecto"));
 const DashboardDocumentos = lazy(() => import("./pages/DashboardDocumentos"));
 const DashboardMensajes = lazy(() => import("./pages/DashboardMensajes"));
 const DashboardSoporte = lazy(() => import("./pages/DashboardSoporte"));
+const Planes = lazy(() => import("./pages/Planes"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
